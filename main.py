@@ -10,6 +10,7 @@ Compress(app)
 
 global_content = {
     "experience": "21",
+    "number": "+91 944 356 4555",
 }
 
 home_content = {
@@ -82,7 +83,7 @@ home_content = {
     "appointment": {
         "title": "We're Award Winning Insurance Company",
         "content": "Zeal Direct & Reinsurance Broking Services is licensed, regulated and controlled by the Insurance Regulatory and Development Authority (IRDA), the insurance regulatory body in India. We are also a member of the Insurance Brokers Association of India.",
-        "number": "+91 944 356 4555",
+        
     },
     "team": {
         "title": "Meet Our Professional Team Members",
@@ -150,7 +151,23 @@ home_content = {
     },
 }
 
-about_content = {}
+about_content = {
+    "hero": {
+        "image": "/static/img/about-hero.jpg",
+    },
+    "about" :{
+        "title": "We're Here To Assist You With Exploring Protection",
+        "subtitle": "Aliqu diam amet diam et eos. Clita erat ipsum et lorem sed stet lorem sit clita duo justo erat amet",
+        "bit1": "Flexible Insurance Plans",
+        "bit2": "Money Back Guarantee",
+        "content": "Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet",
+    },
+    "facts": {
+        "title": "Our Mission",
+        "content": "Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet",
+    }
+
+}
 
 service_content = {}
 
