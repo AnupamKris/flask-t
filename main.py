@@ -8,10 +8,7 @@ cache = Cache(app, config={"CACHE_TYPE": "simple"})  # Simple in-memory cache
 Compress(app)
 
 
-global_content = {
-    "experience": "21",
-    "number": "+91 944 356 4555",
-}
+global_content = {"experience": "21", "number": "+91 944 356 4555"}
 
 home_content = {
     "hero": {
