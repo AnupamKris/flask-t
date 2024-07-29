@@ -16,6 +16,8 @@ home_content = {
         "subtitle": "Experience the difference of working with an insurance specialist.",
         "content": "Zeal Insurance is a leading provider of risk, insurance, and reinsurance solutions globally, managed by seasoned professionals with strong connections to domestic and international insurance markets. We are licensed by the Insurance Regulatory and Development Authority (IRDA) and a member of the Insurance Brokers Association of India.",
         "number": "+91 44 42117075",
+        "feature1": "Flexible Insurance Plans",
+        "feature2": "Guaranteed Best Prices",
     },
     "stats": {
         "happy_clients": "3000",
@@ -101,47 +103,6 @@ home_content = {
         "title": "Zeal Insurance: Excellence in Service and Innovation",
         "content": "We are dedicated to exceeding client expectations through well-defined quality processes and providing time-bound, cost-effective solutions. Our holistic, interactive, versatile, and accurate approach ensures we deliver exceptional value and contribute to the industry's advancement.",
     },
-    "team": {
-        "title": "Meet Our Expert Team",
-        "members": [
-            {
-                "name": "Avani Sharma",
-                "designation": "Chief Risk Officer",
-                "image": "/static/img/team-1.jpg",
-                "linkedin": "https://www.linkedin.com/in/avani-sharma",
-                "twitter": "https://twitter.com/avani_sharma",
-                "facebook": "https://facebook.com/avani.sharma",
-                "youtube": "https://youtube.com/avani.sharma",
-            },
-            {
-                "name": "Rahul Desai",
-                "designation": "Senior Insurance Analyst",
-                "image": "/static/img/team-2.jpg",
-                "linkedin": "https://www.linkedin.com/in/rahul-desai",
-                "twitter": "https://twitter.com/rahul_desai",
-                "facebook": "https://facebook.com/rahul.desai",
-                "youtube": "https://youtube.com/rahul.desai",
-            },
-            {
-                "name": "Priya Kapoor",
-                "designation": "Reinsurance Specialist",
-                "image": "/static/img/team-3.jpg",
-                "linkedin": "https://www.linkedin.com/in/priya-kapoor",
-                "twitter": "https://twitter.com/priya_kapoor",
-                "facebook": "https://facebook.com/priya.kapoor",
-                "youtube": "https://youtube.com/priya.kapoor",
-            },
-            {
-                "name": "Vijay Singh",
-                "designation": "Insurance Consultant",
-                "image": "/static/img/team-4.jpg",
-                "linkedin": "https://www.linkedin.com/in/vijay-singh",
-                "twitter": "https://twitter.com/vijay_singh",
-                "facebook": "https://facebook.com/vijay.singh",
-                "youtube": "https://youtube.com/vijay.singh",
-            },
-        ],
-    },
     "testimonial": {
         "title": "Hear What Our Clients Say",
         "testimonials": [
@@ -213,6 +174,47 @@ about_content = {
             "We combine report of a scientist, intuition of an artist and insight of a businessman and serve both sides like priest of marriage and not like an advocate of divorce.",
         ],
     },
+    "team": {
+        "title": "Meet Our Expert Team",
+        "members": [
+            {
+                "name": "Avani Sharma",
+                "designation": "Chief Risk Officer",
+                "image": "/static/img/team-1.jpg",
+                "linkedin": "https://www.linkedin.com/in/avani-sharma",
+                "twitter": "https://twitter.com/avani_sharma",
+                "facebook": "https://facebook.com/avani.sharma",
+                "youtube": "https://youtube.com/avani.sharma",
+            },
+            {
+                "name": "Rahul Desai",
+                "designation": "Senior Insurance Analyst",
+                "image": "/static/img/team-2.jpg",
+                "linkedin": "https://www.linkedin.com/in/rahul-desai",
+                "twitter": "https://twitter.com/rahul_desai",
+                "facebook": "https://facebook.com/rahul.desai",
+                "youtube": "https://youtube.com/rahul.desai",
+            },
+            {
+                "name": "Priya Kapoor",
+                "designation": "Reinsurance Specialist",
+                "image": "/static/img/team-3.jpg",
+                "linkedin": "https://www.linkedin.com/in/priya-kapoor",
+                "twitter": "https://twitter.com/priya_kapoor",
+                "facebook": "https://facebook.com/priya.kapoor",
+                "youtube": "https://youtube.com/priya.kapoor",
+            },
+            {
+                "name": "Vijay Singh",
+                "designation": "Insurance Consultant",
+                "image": "/static/img/team-4.jpg",
+                "linkedin": "https://www.linkedin.com/in/vijay-singh",
+                "twitter": "https://twitter.com/vijay_singh",
+                "facebook": "https://facebook.com/vijay.singh",
+                "youtube": "https://youtube.com/vijay.singh",
+            },
+        ],
+    },
 }
 
 
@@ -249,6 +251,16 @@ def about():
 def service():
     return render_template(
         "service.html",
+        global_content=global_content,
+        service_content=home_content,
+        enumerate=enumerate,
+    )
+
+
+@app.route("/service/<page>")
+def service_detail(page):
+    return render_template(
+        "servicedetail.html",
         global_content=global_content,
         service_content=home_content,
         enumerate=enumerate,
