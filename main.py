@@ -33,12 +33,12 @@ home_content = {
         "items": [
             {
                 "title": "Tailored Risk Management Solutions",
-                "content": "Our Risk Management Group provides comprehensive services including insurance portfolio audits, gap analysis reports, risk inspections, claims management, and enterprise risk management strategies. We work closely with clients to identify and mitigate potential risks, ensuring optimal protection.",
+                "content": "Our Risk Management Group offers insurance audits, gap analysis, risk inspections, claims management, and enterprise risk management. We help clients identify and mitigate risks for optimal protection.",
                 "image": "/static/img/carousel-1.jpg",
             },
             {
                 "title": "Diverse Insurance Coverage",
-                "content": "Our General Insurance Group offers a wide range of insurance products covering various sectors, including construction & engineering, fire & LOP, motor, marine cargo & hull, credit & financial, oil & energy, group & individual life, and health & PA insurance. We provide customized solutions to meet your specific needs and industry requirements.",
+                "content": "Our General Insurance Group offers tailored insurance solutions for sectors like construction, engineering, fire, motor, marine, credit, financial, oil, energy, life, and health. We customize our products to meet your specific needs and industry requirements.",
                 "image": "/static/img/carousel-2.jpg",
             },
         ]
