@@ -346,9 +346,16 @@ def service_detail(page):
     )
 
 
+@app.route("/admin")
+def admin():
+    return render_template("admin.html", home_content=db.get("home_content"))
+
+
 @app.route("/admin/<page>")
-def admin(page):
-    return render_template("admin.html", page=page, home_content=db.get("home_content"))
+def adminEdit(page):
+    return render_template(
+        "adminedit.html", page=page, home_content=db.get("home_content")
+    )
 
 
 @app.route("/contact")
