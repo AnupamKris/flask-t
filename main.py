@@ -316,5 +316,12 @@ def admin(page):
     return render_template("admin.html", page=page, home_content=home_content)
 
 
+@app.route("/contact")
+def contact():
+    return render_template(
+        "contact.html", home_content=home_content, global_content=global_content
+    )
+
+
 if __name__ == "__main__":
     app.run(debug=True)
