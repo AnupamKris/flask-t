@@ -8,7 +8,11 @@ cache = Cache(app, config={"CACHE_TYPE": "simple"})  # Simple in-memory cache
 Compress(app)
 
 
-global_content = {"experience": "21", "number": "+91 944 356 4555"}
+global_content = {
+    "experience": "21",
+    "number": "+91 944 356 4555",
+    "email": "admin@zealinsurance.com",
+}
 
 home_content = {
     "hero": {
@@ -60,7 +64,7 @@ home_content = {
             {
                 "title": "Fire and LOP Insurance",
                 "content": "Protects against fire damage and losses related to business interruption.",
-                "image": "/static/img/icon/icon-05-light.png",
+                "image": "/static/img/icon/icon-11-light.png",
             },
             {
                 "title": "Motor Insurance",
@@ -68,14 +72,9 @@ home_content = {
                 "image": "/static/img/icon/icon-08-light.png",
             },
             {
-                "title": "Business Insurance",
-                "content": "Offers specialized insurance for various sectors like construction, energy, and liability.",
-                "image": "/static/img/icon/icon-07-light.png",
-            },
-            {
-                "title": "Property Insurance",
-                "content": "Provides comprehensive coverage for various types of property, including buildings, contents, and marine cargo.",
-                "image": "/static/img/icon/icon-06-light.png",
+                "title": "Energy Risks Insurance",
+                "content": "Specialized coverage for oil, gas, and mining operations, addressing unique risks in these sectors.",
+                "image": "/static/img/icon/icon-12-light.png",
             },
             {
                 "title": "Construction and Engineering Insurance",
@@ -83,18 +82,63 @@ home_content = {
                 "image": "/static/img/icon/icon-02-light.png",
             },
             {
-                "title": "Marine Cargo and Hull Insurance",
-                "content": "Protects goods transported by sea, as well as the vessels themselves.",
+                "title": "Project Finance Insurance",
+                "content": "Mitigates financial risks associated with large-scale infrastructure and development projects.",
+                "image": "/static/img/icon/icon-06-light.png",
+            },
+            {
+                "title": "Trade Credit and Financial Lines Insurance",
+                "content": "Protects businesses from losses due to non-payment by buyers and offers various financial risk solutions.",
                 "image": "/static/img/icon/icon-09-light.png",
             },
             {
-                "title": "Credit and Financial Insurance",
-                "content": "Covers losses resulting from non-payment by debtors.",
+                "title": "Political and Terrorism Risk Insurance",
+                "content": "Coverage against losses caused by political instability, terrorism, and related events.",
                 "image": "/static/img/icon/icon-03-light.png",
             },
             {
-                "title": "Oil and Energy Insurance",
-                "content": "Insures risks associated with oil and gas exploration, production, and transportation.",
+                "title": "Professional Risks Insurance",
+                "content": "Includes Directors & Officers liability, Professional Liability (Errors & Omissions), and Bankers Blanket Bond, safeguarding professionals and businesses against negligence claims.",
+                "image": "/static/img/icon/icon-04-light.png",
+            },
+            {
+                "title": "Cyber Liability and Crime Insurance",
+                "content": "Protection against cyber attacks, data breaches, cybercrime, and related liabilities.",
+                "image": "/static/img/icon/icon-04-light.png",
+            },
+            {
+                "title": "Public and Product Liability Insurance",
+                "content": "Covers businesses against claims of bodily injury or property damage caused by their products or operations, including product recall.",
+                "image": "/static/img/icon/icon-04-light.png",
+            },
+            {
+                "title": "Employment Practices Liability Insurance",
+                "content": "Protection against claims arising from employment-related issues like discrimination, harassment, and wrongful termination.",
+                "image": "/static/img/icon/icon-04-light.png",
+            },
+            {
+                "title": "Kidnap & Ransom Insurance",
+                "content": "Coverage for ransom payments, response costs, and other expenses related to kidnapping and extortion events.",
+                "image": "/static/img/icon/icon-04-light.png",
+            },
+            {
+                "title": "Event Insurance",
+                "content": "Specialized coverage for events, exhibitions, matches, and film productions, protecting against a range of potential risks.",
+                "image": "/static/img/icon/icon-04-light.png",
+            },
+            {
+                "title": "Multi-Modal Transport Operators Insurance",
+                "content": "Comprehensive coverage for businesses involved in transporting goods using multiple modes of transport.",
+                "image": "/static/img/icon/icon-04-light.png",
+            },
+            {
+                "title": "Extended Warranty Insurance",
+                "content": "Provides extended coverage for products beyond the manufacturer's original warranty period.",
+                "image": "/static/img/icon/icon-04-light.png",
+            },
+            {
+                "title": "Indian Interest Abroad Insurance",
+                "content": "Protects the assets and interests of Indian businesses operating in foreign countries.",
                 "image": "/static/img/icon/icon-04-light.png",
             },
         ]
