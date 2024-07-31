@@ -37,7 +37,12 @@
       <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
         <h1 class="display-6 mb-5">If You Have Any Query, Please Contact Us</h1>
 
-        <form action="/sendmail" method="POST">
+        <form
+          action="/sendmail"
+          method="POST"
+          onsubmit="return submitForm(event)"
+          id="form"
+        >
           <div class="row g-3">
             <div class="col-md-6">
               <div class="form-floating">
@@ -47,6 +52,7 @@
                   id="name"
                   placeholder="Your Name"
                   required
+                  name="name"
                 />
                 <label for="name">Your Name</label>
               </div>
@@ -59,6 +65,7 @@
                   id="email"
                   placeholder="Your Email"
                   required
+                  name="email"
                 />
                 <label for="email">Your Email</label>
               </div>
@@ -71,6 +78,7 @@
                   id="number"
                   placeholder="Your Number"
                   required
+                  name="number"
                 />
                 <label for="number">Your Number</label>
               </div>
@@ -82,6 +90,7 @@
                   class="form-control"
                   id="location"
                   placeholder="Your Location"
+                  name="location"
                 />
                 <label for="location">Your Location</label>
               </div>
@@ -93,6 +102,7 @@
                   class="form-control"
                   id="subject"
                   placeholder="Subject"
+                  name="subject"
                 />
                 <label for="subject">Subject</label>
               </div>
@@ -104,6 +114,7 @@
                   placeholder="Leave a message here"
                   id="message"
                   style="height: 100px"
+                  name="message"
                 ></textarea>
                 <label for="message">Message</label>
               </div>
@@ -115,6 +126,39 @@
             </div>
           </div>
         </form>
+
+        <script>
+          const submitForm = (e) => {
+            e.preventDefault();
+
+            let formData = {
+              name: document.getElementById("name").value,
+              number: document.getElementById("number").value,
+              location: document.getElementById("location").value,
+              subject: document.getElementById("subject").value,
+              message: document.getElementById("message").value,
+              email: document.getElementById("email").value,
+            };
+
+            console.log(formData);
+
+            fetch("/api/add-respondant", {
+              method: "POST",
+              body: JSON.stringify({ repondant: formData }),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.status == "success") {
+                  alert("Message sent successfully");
+                } else {
+                  alert("Error sending message");
+                }
+              });
+          };
+        </script>
       </div>
       <div
         class="col-lg-6 wow fadeIn"

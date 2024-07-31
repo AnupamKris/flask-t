@@ -296,7 +296,7 @@ class JsonDB(object):
 # service_content = {}
 
 db = JsonDB("data.json")
-repondants = JsonDB("repondants.json")
+respondants = JsonDB("respondants.json")
 
 # db.set("home_content", home_content)
 # db.set("global_content", global_content)
@@ -430,6 +430,22 @@ def delete_image():
     image = request.get_json()["image"]
     os.remove(os.path.join("static/uploads", image))
     return {"status": "success"}
+
+
+@app.route("/api/add-respondant", methods=["POST"])
+def add_respondant():
+    respondant = request.get_json()["repondant"]
+    resps = respondants.get("respondants")
+    respondant["read"] = False
+    resps.append(respondant)
+    respondants.set("respondants", resps)
+    return {"status": "success"}
+
+
+@app.route("/api/get-respondants", methods=["POST"])
+def get_respondants():
+    resp = respondants.get("respondants")
+    return jsonify(resp)
 
 
 if __name__ == "__main__":

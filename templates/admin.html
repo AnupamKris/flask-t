@@ -219,6 +219,24 @@
       flex-direction: column;
       gap: 20px;
       padding: 25px;
+
+      width: 100%;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table th,
+    table td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    table th {
+      background-color: #f2f2f2;
     }
   </style>
 
@@ -231,7 +249,10 @@
             >Update Content</span
           >
           <span @click="page = 'images'" :class="{active: page == 'images'}"
-            >Update Images</span
+            >Upload Images</span
+          >
+          <span @click="page = 'queries'" :class="{active: page == 'queries'}"
+            >Queries</span
           >
         </div>
         <div class="container" v-if="page == 'content'">
@@ -510,6 +531,31 @@
             </div>
           </div>
         </div>
+        <div v-else-if="page == 'queries'" class="container-2">
+          <h1>Queries</h1>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Number</th>
+                <th>Location</th>
+                <th>Subject</th>
+                <th>Message</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="query in queries" :key="query.name">
+                <td>[[query.name]]</td>
+                <td>[[query.number]]</td>
+                <td>[[query.location]]</td>
+                <td>[[query.subject]]</td>
+                <td>[[query.message]]</td>
+                <td>[[query.email]]</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </main>
     </div>
 
@@ -523,7 +569,7 @@
           const mainData = ref({});
           const images = ref([]);
           const selectedPage = ref("home_content");
-
+          const queries = ref([]);
           const selectedImages = ref([]);
 
           const formatKey = (key) => {
@@ -655,6 +701,14 @@
               .then((data) => {
                 images.value = data;
               });
+
+            fetch("/api/get-respondants", {
+              method: "POST",
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                queries.value = data;
+              });
           });
 
           return {
@@ -672,6 +726,7 @@
             selectedImages,
             uploadImages,
             handleFileUpload,
+            queries,
           };
         },
         delimiters: ["[[", "]]"],
