@@ -296,6 +296,8 @@ class JsonDB(object):
 # service_content = {}
 
 db = JsonDB("data.json")
+repondants = JsonDB("repondants.json")
+
 # db.set("home_content", home_content)
 # db.set("global_content", global_content)
 # db.set("about_content", about_content)
@@ -332,8 +334,9 @@ def about():
 def service():
     return render_template(
         "service.html",
+        home_content=db.get("home_content"),
         global_content=db.get("global_content"),
-        service_content=db.get("home_content"),
+        service_content=db.get("service_content"),
         enumerate=enumerate,
     )
 
@@ -368,6 +371,7 @@ def contact():
         "contact.html",
         home_content=db.get("home_content"),
         global_content=db.get("global_content"),
+        contact_content=db.get("contact_content"),
     )
 
 
@@ -385,6 +389,7 @@ def get_data():
             "global_content": db.get("global_content"),
             "about_content": db.get("about_content"),
             "service_content": db.get("service_content"),
+            "contact_content": db.get("contact_content"),
         }
     )
 
@@ -396,10 +401,12 @@ def update_data():
     global_content = data["global_content"]
     about_content = data["about_content"]
     service_content = data["service_content"]
+    contact_content = data["contact_content"]
     db.set("home_content", home_content)
     db.set("global_content", global_content)
     db.set("about_content", about_content)
     db.set("service_content", service_content)
+    db.set("contact_content", contact_content)
     return {"status": "success"}
 
 

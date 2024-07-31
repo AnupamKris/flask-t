@@ -1,4 +1,18 @@
 {% extends "base.html" %} {% block body %}
+
+<style>
+  .value-list {
+    margin-bottom: 15px !important;
+    padding: 0;
+  }
+
+  .page-header {
+    background: url({{contact_content["header"]["image"]}}) center center
+      no-repeat;
+    background-size: cover;
+  }
+</style>
+
 <!-- Page Header Start -->
 <div
   class="container-fluid page-header py-5 mb-5 wow fadeIn"

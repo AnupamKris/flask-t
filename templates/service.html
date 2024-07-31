@@ -1,5 +1,18 @@
 {% extends "base.html" %} {% block body %}
 
+<style>
+  .value-list {
+    margin-bottom: 15px !important;
+    padding: 0;
+  }
+
+  .page-header {
+    background: url({{service_content["header"]["image"]}}) center center
+      no-repeat;
+    background-size: cover;
+  }
+</style>
+
 <!-- Page Header Start -->
 <div
   class="container-fluid page-header py-5 mb-5 wow fadeIn"
@@ -24,7 +37,7 @@
       <h1 class="display-6 mb-5">We Provide professional Insurance Services</h1>
     </div>
     <div class="row g-4 justify-content-center">
-      {% for index, item in enumerate(service_content["services"]["items"]) %}
+      {% for index, item in enumerate(home_content["services"]["items"]) %}
       <div
         class="col-lg-4 col-md-6 wow fadeInUp"
         data-wow-delay="{{index*0.1+0.1}}s"

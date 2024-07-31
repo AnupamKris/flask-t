@@ -5,6 +5,12 @@
     margin-bottom: 15px !important;
     padding: 0;
   }
+
+  .page-header {
+    background: url({{about_content["header"]["image"]}}) center center
+      no-repeat;
+    background-size: cover;
+  }
 </style>
 
 <!-- Page Header Start -->
@@ -36,7 +42,7 @@
         >
           <img
             class="position-absolute w-100 h-100"
-            src="/static/img/about.jpg"
+            src="{{ about_content['company_overview']['image'] }}"
             alt=""
             style="object-fit: cover"
           />
@@ -145,7 +151,8 @@
         >
           <img
             class="position-absolute w-100 h-100"
-            src="/static/img/feature.jpg"
+            src="{{
+          about_content['mission_vision']['image'] }}"
             alt=""
             style="object-fit: cover"
           />
@@ -182,7 +189,8 @@
         >
           <img
             class="position-absolute w-100 h-100"
-            src="/static/img/feature.jpg"
+            src="{{
+          about_content['why_choose_us']['image'] }}"
             alt=""
             style="object-fit: cover"
           />

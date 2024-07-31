@@ -237,10 +237,11 @@
         <div class="container" v-if="page == 'content'">
           <div class="panel">
             <select name="page" id="page" v-model="selectedPage">
-              <option value="home_content">Home</option>
-              <option value="global_content">Global</option>
-              <option value="about_content">About</option>
-              <option value="service_content">Service</option>
+              <option value="home_content">Home Page</option>
+              <option value="global_content">Global Content</option>
+              <option value="about_content">About Page</option>
+              <option value="service_content">Service Page</option>
+              <option value="contact_content">Contact Page</option>
             </select>
             <button @click="updateData">Save</button>
           </div>
@@ -437,10 +438,25 @@
                 >
                   <div class="input-field">
                     <p class="label">[[formatKey(vkey)]]</p>
+                    <select
+                      name="image"
+                      id="image"
+                      v-model="mainData[selectedPage][key][vkey]"
+                      v-if="vkey == 'image'"
+                    >
+                      <option value="">Select Image</option>
+                      <option
+                        v-for="image in images"
+                        :key="image"
+                        :value="'/static/uploads/'+image"
+                      >
+                        [[image]]
+                      </option>
+                    </select>
                     <textarea
                       type="text"
                       v-model="mainData[selectedPage][key][vkey]"
-                      v-if="vkey != 'items' && mainData[selectedPage][key][vkey].length > 50"
+                      v-else-if="vkey != 'items' && mainData[selectedPage][key][vkey].length > 50"
                     ></textarea>
                     <input
                       type="text"
@@ -571,6 +587,7 @@
               .then((data) => {
                 if (data.status == "success") {
                   alert("Images uploaded successfully");
+                  images.value = [...images.value, ...selectedImages.value];
                   selectedImages.value = [];
                 } else {
                   alert("Error uploading images");
@@ -610,6 +627,7 @@
                 global_content: mainData.value.global_content,
                 about_content: mainData.value.about_content,
                 service_content: mainData.value.service_content,
+                contact_content: mainData.value.contact_content,
               }),
             })
               .then((response) => response.json())
