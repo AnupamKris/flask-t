@@ -4,29 +4,660 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   </head>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+      box-sizing: border-box;
+    }
+
+    body {
+    }
+
+    h1 {
+      text-transform: capitalize;
+    }
+
+    select {
+      width: 50%;
+      border-radius: 10px;
+      padding: 15px;
+      border: 1px solid #e6e6e6;
+    }
+
+    .input-field {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .input-field input,
+    .input-field textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #e6e6e6;
+      font-size: 14px;
+    }
+
+    .label {
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+
+    button {
+      padding: 10px 50px;
+      border-radius: 10px;
+      border: 1px solid #e6e6e6;
+      background-color: #ff2a2a;
+      color: #f0f6ff;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .group {
+      border: 1px solid #c9c9c9;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+    }
+
+    .panel {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      position: fixed;
+      top: 10px;
+      left: 310px;
+
+      width: calc(100% - 320px);
+      height: 70px;
+      padding: 0 10px;
+
+      border-radius: 15px;
+
+      background: #e4e4e4;
+      border: 1px solid #e6e6e6;
+    }
+
+    .container {
+      overflow: auto;
+      width: 100%;
+      padding: 15px;
+      padding-top: 90px;
+      height: 100vh;
+    }
+
+    main {
+      display: flex;
+      flex-direction: row;
+      max-height: 100vh;
+      height: 100%;
+    }
+
+    .sidebar {
+      width: 300px;
+      min-width: 300px;
+      height: 100vh;
+      background-color: #141414;
+      border-right: 1px solid #e6e6e6;
+
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      padding: 10px;
+    }
+
+    .sidebar span {
+      padding: 10px;
+      cursor: pointer;
+
+      background: #242424;
+      color: #ffffff;
+      border-radius: 5px;
+    }
+
+    .sidebar span:hover {
+      background: #535353;
+    }
+
+    .sidebar .active {
+      background: #e2e2e2;
+      color: #313131;
+    }
+
+    .sidebar h1 {
+      padding: 10px;
+      color: #ffffff;
+    }
+
+    body,
+    html {
+      height: 100vh;
+    }
+
+    .capitalize {
+      text-transform: capitalize;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .input-field-h {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .input-field-h label {
+      margin-right: 10px;
+      background: #cccccc;
+      padding: 10px;
+
+      border-radius: 5px;
+    }
+
+    .input-field-h button {
+      padding: 10px;
+      background: #ff0a0a;
+
+      padding: 10px;
+
+      border-radius: 5px;
+    }
+
+    .gallery .gallery-item {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      border: 1px solid #e6e6e6;
+    }
+
+    .gallery .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gallery .gallery-item button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 5px;
+      background: #ff0a0a;
+      border: 0;
+      border-radius: 0 0 0 5px;
+    }
+
+    .gallery .gallery-item p {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      padding: 5px;
+      background: #e6e6e6;
+      border: 0;
+      border-radius: 0 5px 0 0;
+    }
+
+    .container-2 {
+      display: flex;
+      overflow: auto;
+      flex-direction: column;
+      gap: 20px;
+      padding: 25px;
+    }
+  </style>
+
   <body>
     <div id="app">
-      <input type="text" v-model="fiields.a" />
-      <input type="text" v-model="fiields.b" />
-      [[fiields]]
+      <main>
+        <div class="sidebar">
+          <h1>Zeal Insurance</h1>
+          <span @click="page = 'content'" :class="{active: page == 'content'}"
+            >Update Content</span
+          >
+          <span @click="page = 'images'" :class="{active: page == 'images'}"
+            >Update Images</span
+          >
+        </div>
+        <div class="container" v-if="page == 'content'">
+          <div class="panel">
+            <select name="page" id="page" v-model="selectedPage">
+              <option value="home_content">Home</option>
+              <option value="global_content">Global</option>
+              <option value="about_content">About</option>
+              <option value="service_content">Service</option>
+            </select>
+            <button @click="updateData">Save</button>
+          </div>
+
+          <div class="editable" v-if="selectedPage">
+            <h1 class="capitalize">[[formatKey(selectedPage)]]</h1>
+            <div
+              v-for="key in Object.keys(mainData[selectedPage])"
+              :key="key"
+              v-if="mainData[selectedPage] && selectedPage != 'global_content'"
+            >
+              <h2 class="capitalize">[[formatKey(key)]]</h2>
+              <div v-if="key == 'team'">
+                <div class="input-field">
+                  <p class="label">Title</p>
+                  <input
+                    type="text"
+                    v-model="mainData[selectedPage][key].title"
+                  />
+                </div>
+                <div
+                  v-for="member, index in mainData[selectedPage][key].members"
+                  :key="index"
+                  class="group"
+                >
+                  <div class="input-field">
+                    <p class="label">Name</p>
+                    <input
+                      type="text"
+                      v-model="mainData[selectedPage][key].members[index].name"
+                    />
+                  </div>
+                  <div class="input-field">
+                    <p class="label">Designation</p>
+                    <input
+                      type="text"
+                      v-model="mainData[selectedPage][key].members[index].designation"
+                    />
+                  </div>
+                  <div class="input-field">
+                    <p class="label">Image</p>
+                    <select
+                      name="image"
+                      id="image"
+                      v-model="mainData[selectedPage][key].members[index].image"
+                    >
+                      <option value="">Select Image</option>
+                      <option
+                        v-for="image in images"
+                        :key="image"
+                        :value="'/static/uploads/'+image"
+                      >
+                        [[image]]
+                      </option>
+                    </select>
+                  </div>
+                  <div class="input-field">
+                    <p class="label">Linkedin</p>
+                    <input
+                      type="text"
+                      v-model="mainData[selectedPage][key].members[index].linkedin"
+                    />
+                  </div>
+                  <div class="input-field">
+                    <p class="label">Twitter</p>
+                    <input
+                      type="text"
+                      v-model="mainData[selectedPage][key].members[index].twitter"
+                    />
+                  </div>
+                  <div class="input-field">
+                    <p class="label">Facebook</p>
+                    <input
+                      type="text"
+                      v-model="mainData[selectedPage][key].members[index].facebook"
+                    />
+                  </div>
+                  <div class="input-field">
+                    <p class="label">Youtube</p>
+                    <input
+                      type="text"
+                      v-model="mainData[selectedPage][key].members[index].youtube"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div v-else-if="key == 'carousel'">
+                <div
+                  class="group"
+                  v-for="item, index in mainData[selectedPage][key].items"
+                  :key="index"
+                >
+                  <div class="input-field">
+                    <p class="label">Title</p>
+                    <input
+                      type="text"
+                      v-model="mainData[selectedPage][key].items[index].title"
+                    />
+                  </div>
+                  <div class="input-field">
+                    <p class="label">Image</p>
+
+                    <select
+                      name="image"
+                      id="image"
+                      v-model="mainData[selectedPage][key].items[index].image"
+                    >
+                      <option value="">Select Image</option>
+                      <option
+                        v-for="image in images"
+                        :key="image"
+                        :value="'/static/uploads/'+image"
+                      >
+                        [[image]]
+                      </option>
+                    </select>
+                  </div>
+                  <div class="input-field">
+                    <p class="label">Content</p>
+                    <textarea
+                      type="text"
+                      v-model="mainData[selectedPage][key].items[index].content"
+                      v-if="mainData[selectedPage][key].items[index].content.length > 50"
+                    ></textarea>
+                    <input
+                      type="text"
+                      v-model="mainData[selectedPage][key].items[index].content"
+                      v-else
+                    />
+                  </div>
+                  [[mainData[selectedPage][key].items[index].image]]
+                  <button @click="deleteCarouselItem(index)">Delete</button>
+                </div>
+                <button @click="addCarouselItem">Add Item</button>
+              </div>
+              <div v-else-if="key == 'testimonial'">
+                <div class="input-field">
+                  <p class="label">Title</p>
+                  <input
+                    type="text"
+                    v-model="mainData[selectedPage][key].title"
+                  />
+                </div>
+                <div
+                  v-for="testimonial, index in mainData.home_content.testimonial.testimonials"
+                  :key="index"
+                >
+                  <div class="group">
+                    <div class="input-field">
+                      <p class="label">Name</p>
+                      <input
+                        type="text"
+                        v-model="mainData[selectedPage][key].testimonials[index].name"
+                      />
+                    </div>
+                    <div class="input-field">
+                      <p class="label">Designation</p>
+                      <input
+                        type="text"
+                        v-model="mainData[selectedPage][key].testimonials[index].designation"
+                      />
+                    </div>
+                    <div class="input-field">
+                      <p class="label">Image</p>
+                      <select
+                        name="image"
+                        id="image"
+                        v-model="mainData[selectedPage][key].testimonials[index].image"
+                      >
+                        <option value="">Select Image</option>
+                        <option
+                          v-for="image in images"
+                          :key="image"
+                          :value="'/static/uploads/'+image"
+                        >
+                          [[image]]
+                        </option>
+                      </select>
+                    </div>
+                    <div class="input-field">
+                      <p class="label">Content</p>
+                      <textarea
+                        type="text"
+                        v-model="mainData[selectedPage][key].testimonials[index].content"
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div v-else-if="key != 'services'">
+                <div
+                  v-for="val, vkey in mainData[selectedPage][key]"
+                  :key="vkey"
+                >
+                  <div class="input-field">
+                    <p class="label">[[formatKey(vkey)]]</p>
+                    <textarea
+                      type="text"
+                      v-model="mainData[selectedPage][key][vkey]"
+                      v-if="vkey != 'items' && mainData[selectedPage][key][vkey].length > 50"
+                    ></textarea>
+                    <input
+                      type="text"
+                      v-model="mainData[selectedPage][key][vkey]"
+                      v-else
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div v-else-if="selectedPage == 'global_content'">
+              <div v-for="val, vkey in mainData[selectedPage]" :key="vkey">
+                <div class="input-field">
+                  <p class="label">[[vkey]]</p>
+                  <textarea
+                    type="text"
+                    v-model="mainData[selectedPage][vkey]"
+                    v-if="vkey != 'items' && mainData[selectedPage][vkey].length > 50"
+                  ></textarea>
+                  <input
+                    type="text"
+                    v-model="mainData[selectedPage][vkey]"
+                    v-else
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-else-if="page == 'images'" class="container-2">
+          <h1>Images</h1>
+          <div class="input-field-h">
+            <label for="fileUp">Choose Files</label>
+            <span>[[selectedImages.length]] selected</span>
+            <button @click="uploadImages">Upload</button>
+          </div>
+
+          <input
+            type="file"
+            id="fileUp"
+            ref="imgUpload"
+            multiple
+            @change="handleFileUpload"
+          />
+
+          <div class="gallery">
+            <div v-for="image in images" :key="image" class="gallery-item">
+              <img :src="'/static/uploads/' + image" />
+              <button @click="deleteImage(image)">Delete</button>
+              <p>[[image]]</p>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+      const { createApp, reactive, onMounted, ref, watch } = Vue;
+
+      createApp({
+        setup() {
+          const page = ref("images");
+          const mainData = ref({});
+          const images = ref([]);
+          const selectedPage = ref("home_content");
+
+          const selectedImages = ref([]);
+
+          const formatKey = (key) => {
+            return key.replace(/_/g, " ");
+          };
+
+          const addTestimonial = () => {
+            mainData.value.home_content.testimonial.testimonials.push({
+              name: "",
+              designation: "",
+              image: "",
+              content: "",
+            });
+          };
+
+          const deleteTestimonial = (index) => {
+            mainData.value.home_content.testimonial.testimonials.splice(
+              index,
+              1
+            );
+          };
+
+          const addCarouselItem = () => {
+            mainData.value.home_content.carousel.items.push({
+              title: "",
+              image: "",
+              content: "",
+            });
+          };
+
+          const deleteCarouselItem = (index) => {
+            mainData.value.home_content.carousel.items.splice(index, 1);
+          };
+
+          const handleFileUpload = (e) => {
+            const files = e.target.files;
+            for (let i = 0; i < files.length; i++) {
+              const file = files[i];
+              const reader = new FileReader();
+
+              reader.onload = (e) => {
+                const image = e.target.result;
+                selectedImages.value.push(file);
+              };
+
+              reader.readAsDataURL(file);
+            }
+          };
+
+          const uploadImages = () => {
+            let formData = new FormData();
+            for (let i = 0; i < selectedImages.value.length; i++) {
+              formData.append("file", selectedImages.value[i]);
+            }
+
+            fetch("/api/upload-images", {
+              method: "POST",
+              body: formData,
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.status == "success") {
+                  alert("Images uploaded successfully");
+                  selectedImages.value = [];
+                } else {
+                  alert("Error uploading images");
+                }
+              });
+          };
+
+          const deleteImage = (image) => {
+            fetch("/api/delete-image", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                image: image,
+              }),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.status == "success") {
+                  alert("Image deleted successfully");
+                  images.value = images.value.filter((img) => img != image);
+                } else {
+                  alert("Error deleting image");
+                }
+              });
+          };
+
+          const updateData = () => {
+            fetch("/api/update-data", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                home_content: mainData.value.home_content,
+                global_content: mainData.value.global_content,
+                about_content: mainData.value.about_content,
+                service_content: mainData.value.service_content,
+              }),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.status == "success") {
+                  alert("Data updated successfully");
+                } else {
+                  alert("Error updating data");
+                }
+              });
+          };
+
+          onMounted(() => {
+            fetch("/api/get-data")
+              .then((response) => response.json())
+              .then((data) => {
+                console.log(data);
+                mainData.value = data;
+              });
+
+            fetch("/api/get-images", {
+              method: "POST",
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                images.value = data;
+              });
+          });
+
+          return {
+            mainData,
+            selectedPage,
+            updateData,
+            images,
+            formatKey,
+            page,
+            addTestimonial,
+            deleteTestimonial,
+            addCarouselItem,
+            deleteCarouselItem,
+            deleteImage,
+            selectedImages,
+            uploadImages,
+            handleFileUpload,
+          };
+        },
+        delimiters: ["[[", "]]"],
+      }).mount("#app");
+    </script>
   </body>
-
-  <script>
-    const { createApp, reactive } = Vue;
-
-    createApp({
-      setup() {
-        const fiields = reactive({
-          a: "",
-          b: "",
-        });
-
-        return { fiields };
-      },
-      delimiters: ["[[", "]]"],
-    }).mount("#app");
-  </script>
 </html>

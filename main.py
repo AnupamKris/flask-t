@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_caching import Cache
 from flask_compress import Compress
 import json
+
+import os
 
 app = Flask(__name__)
 cache = Cache(app, config={"CACHE_TYPE": "simple"})  # Simple in-memory cache
@@ -348,7 +350,9 @@ def service_detail(page):
 
 @app.route("/admin")
 def admin():
-    return render_template("admin.html", home_content=db.get("home_content"))
+    return render_template(
+        "admin.html",
+    )
 
 
 @app.route("/admin/<page>")
@@ -371,6 +375,54 @@ def contact():
 def sendmail():
     print(request.form)
     return redirect(url_for("contact"))
+
+
+@app.route("/api/get-data")
+def get_data():
+    return jsonify(
+        {
+            "home_content": db.get("home_content"),
+            "global_content": db.get("global_content"),
+            "about_content": db.get("about_content"),
+            "service_content": db.get("service_content"),
+        }
+    )
+
+
+@app.route("/api/update-data", methods=["POST"])
+def update_data():
+    data = request.get_json()
+    home_content = data["home_content"]
+    global_content = data["global_content"]
+    about_content = data["about_content"]
+    service_content = data["service_content"]
+    db.set("home_content", home_content)
+    db.set("global_content", global_content)
+    db.set("about_content", about_content)
+    db.set("service_content", service_content)
+    return {"status": "success"}
+
+
+@app.route("/api/get-images", methods=["POST"])
+def get_images():
+    images = os.listdir("static/uploads")
+    return jsonify(images)
+
+
+@app.route("/api/upload-images", methods=["POST"])
+def upload_images():
+    files = request.files.getlist("file")
+    for file in files:
+        filename = file.filename
+        file.save(os.path.join("static/uploads", filename))
+    return {"status": "success"}
+
+
+@app.route("/api/delete-image", methods=["POST"])
+def delete_image():
+    image = request.get_json()["image"]
+    os.remove(os.path.join("static/uploads", image))
+    return {"status": "success"}
 
 
 if __name__ == "__main__":
