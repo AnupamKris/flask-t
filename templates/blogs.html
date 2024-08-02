@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block body %}
+
+<style>
+  
+</style>
+
+<div class="container ">
+  <div class="row">
+    {% for index, item in enumerate(blog_content["blogs"]) %}
+    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+      <div class="blog-item rounded h-100 p-5">
+        <div class="d-flex align-items-center ms-n5 mb-4">
+          <div class="blog-icon flex-shrink-0 bg-primary rounded-end me-4">
+            <img class="/static/img-fluid" src="{{ item['image'] }}" alt="" />
+          </div>
+          <h4 class="mb-0">{{ item['title'] }}</h4>
+        </div>
+        <p class="mb-4">{{ item['content'] }}</p>
+        <a class="btn btn-light px-3" href="">Read More</a>
+      </div>
+    </div>
+    {% endfor %}  
+  </div>
+</div>
+
+
+{% endblock %}

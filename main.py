@@ -297,6 +297,7 @@ class JsonDB(object):
 
 db = JsonDB("data.json")
 respondants = JsonDB("respondants.json")
+blogdb = JsonDB("blogs.json")
 
 # db.set("home_content", home_content)
 # db.set("global_content", global_content)
@@ -375,10 +376,25 @@ def contact():
     )
 
 
-@app.route("/sendmail", methods=["POST"])
-def sendmail():
-    print(request.form)
-    return redirect(url_for("contact"))
+@app.route("/blogs")
+def blogs():
+    return render_template(
+        "blogs.html",
+        global_content=db.get("global_content"),
+        blog_content=db.get("blog_content"),
+        enumerate=enumerate,
+    )
+
+
+@app.route("/blog/<blog_index>")
+def blog(blog_index):
+    return render_template(
+        "blog.html",
+        global_content=db.get("global_content"),
+        blog_content=db.get("blog_content"),
+        blog_index=blog_index,
+        enumerate=enumerate,
+    )
 
 
 @app.route("/api/get-data")
@@ -446,6 +462,41 @@ def add_respondant():
 def get_respondants():
     resp = respondants.get("respondants")
     return jsonify(resp)
+
+
+@app.route("/api/get-blogs", methods=["POST"])
+def get_blogs():
+    resp = blogdb.get("blogs")
+    return jsonify(resp)
+
+
+@app.route("/api/add-blog", methods=["POST"])
+def add_blog():
+    blog = request.get_json()["blog"]
+    blogs = blogdb.get("blogs")
+
+    blogs.append(blog)
+    blogs.set("blogs", blogs)
+    return {"status": "success"}
+
+
+@app.route("/api/delete-blog", methods=["POST"])
+def delete_blog():
+    blog_index = request.get_json()["blog_index"]
+    blogs = blogdb.get("blogs")
+    del blogs[blog_index]
+    blogdb.set("blogs", blogs)
+    return {"status": "success"}
+
+
+@app.route("/api/update-blog", methods=["POST"])
+def update_blog():
+    blog = request.get_json()["blog"]
+    blog_index = request.get_json()["blog_index"]
+    blogs = blogdb.get("blogs")
+    blogs[blog_index] = blog
+    blogs.set("blogs", blogs)
+    return {"status": "success"}
 
 
 if __name__ == "__main__":
