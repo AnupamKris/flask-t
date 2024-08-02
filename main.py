@@ -3,6 +3,7 @@ from flask_caching import Cache
 from flask_compress import Compress
 import json
 
+from uuid import uuid4
 import os
 
 app = Flask(__name__)
@@ -381,18 +382,19 @@ def blogs():
     return render_template(
         "blogs.html",
         global_content=db.get("global_content"),
-        blog_content=db.get("blog_content"),
+        blogs=blogdb.get("blogs"),
         enumerate=enumerate,
     )
 
 
-@app.route("/blog/<blog_index>")
-def blog(blog_index):
+@app.route("/blog/<blog_id>")
+def blog(blog_id):
+    blog, index = find_blog(blog_id)
     return render_template(
         "blog.html",
         global_content=db.get("global_content"),
-        blog_content=db.get("blog_content"),
-        blog_index=blog_index,
+        blog=blog,
+        blog_id=blog_id,
         enumerate=enumerate,
     )
 
@@ -464,6 +466,12 @@ def get_respondants():
     return jsonify(resp)
 
 
+def find_blog(blog_id):
+    for index, blog in enumerate(blogdb.get("blogs")):
+        if blog["id"] == blog_id:
+            return blog, index
+
+
 @app.route("/api/get-blogs", methods=["POST"])
 def get_blogs():
     resp = blogdb.get("blogs")
@@ -474,15 +482,20 @@ def get_blogs():
 def add_blog():
     blog = request.get_json()["blog"]
     blogs = blogdb.get("blogs")
-
+    blog["id"] = str(uuid4())
     blogs.append(blog)
-    blogs.set("blogs", blogs)
-    return {"status": "success"}
+    blogdb.set("blogs", blogs)
+
+    print(blogs, blog)
+
+    return {"blog_id": blog["id"]}
 
 
 @app.route("/api/delete-blog", methods=["POST"])
 def delete_blog():
-    blog_index = request.get_json()["blog_index"]
+    blog_id = request.get_json()["blog_id"]
+
+    blog_index = find_blog(blog_id)[1]
     blogs = blogdb.get("blogs")
     del blogs[blog_index]
     blogdb.set("blogs", blogs)
@@ -492,10 +505,12 @@ def delete_blog():
 @app.route("/api/update-blog", methods=["POST"])
 def update_blog():
     blog = request.get_json()["blog"]
-    blog_index = request.get_json()["blog_index"]
+    blog_id = request.get_json()["blog_id"]
+    blog["id"] = blog_id
+    blog_index = find_blog(blog_id)[1]
     blogs = blogdb.get("blogs")
     blogs[blog_index] = blog
-    blogs.set("blogs", blogs)
+    blogdb.set("blogs", blogs)
     return {"status": "success"}
 
 

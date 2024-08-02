@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css"
+      rel="stylesheet"
+    />
   </head>
 
   <style>
@@ -238,6 +242,21 @@
     table th {
       background-color: #f2f2f2;
     }
+
+    .blogs {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      padding: 25px;
+      overflow-y: auto;
+    }
+
+    .head-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
   </style>
 
   <body>
@@ -253,6 +272,9 @@
           >
           <span @click="page = 'queries'" :class="{active: page == 'queries'}"
             >Queries</span
+          >
+          <span @click="page = 'blogs'" :class="{active: page == 'blogs'}"
+            >Blogs</span
           >
         </div>
         <div class="container" v-if="page == 'content'">
@@ -557,10 +579,57 @@
           </table>
         </div>
         <div v-else-if="page == 'blogs'" class="blogs">
-          <h1>Blogs</h1>
-          <div class="all-blogs">
-            
+          <h1 class="head-row">
+            <span>Blogs</span>
+            <button class="btn btn-primary" @click="createBlog">
+              Create Blog
+            </button>
+          </h1>
+          <table>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="blog, index in blogs"
+                :key="blog.title"
+                @click="editBlog(blog)"
+              >
+                <td>[[blog.title]]</td>
+                <td>[[blog.author]]</td>
+                <td>[[blog.date]]</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div v-else-if="page == 'edit-blog'" class="blogs">
+          <h1 class="head-row">
+            Edit Blog
+            <button @click="deleteBlog">Delete Blog</button>
+          </h1>
+
+          <div class="input-field">
+            <p class="label">Title</p>
+            <input type="text" v-model="selectedBlog.title" />
           </div>
+
+          <div class="input-field">
+            <p class="label">Author</p>
+            <input type="text" v-model="selectedBlog.author" />
+          </div>
+
+          <!-- <div class="input-field">
+            <p class="label">Content</p>
+            <textarea type="text" v-model="selectedBlog.content"></textarea>
+          </div> -->
+
+          <div id="editor"></div>
+
+          <button @click="updateBlog">Save Blog</button>
         </div>
       </main>
     </div>
@@ -571,12 +640,16 @@
 
       createApp({
         setup() {
-          const page = ref("images");
+          const page = ref("blogs");
           const mainData = ref({});
           const images = ref([]);
           const selectedPage = ref("home_content");
           const queries = ref([]);
           const selectedImages = ref([]);
+          const blogs = ref([]);
+          const selectedBlog = ref({});
+          const blogId = ref("");
+          let quill = null;
 
           const formatKey = (key) => {
             return key.replace(/_/g, " ");
@@ -692,6 +765,98 @@
               });
           };
 
+          const createBlog = async () => {
+            let blog = {
+              title: "",
+              author: "",
+              date: new Date().toLocaleDateString(),
+              content: "",
+            };
+
+            const response = await fetch("/api/add-blog", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                blog: blog,
+              }),
+            });
+
+            let resjson = await response.json();
+
+            blogId.value = resjson["blog_id"];
+            blogs.value.push(blog);
+            selectedBlog.value = blog;
+            page.value = "edit-blog";
+
+            setTimeout(() => {
+              quill = new Quill("#editor", {
+                theme: "snow",
+              });
+            }, 500);
+          };
+
+          const updateBlog = async () => {
+            let blog = { ...selectedBlog.value };
+            console.log(quill.root.innerHTML);
+            blog.content = quill.root.innerHTML;
+
+            const response = await fetch("/api/update-blog", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                blog: blog,
+                blog_id: blogId.value,
+              }),
+            });
+
+            if (response.status == 200) {
+              alert("Blog updated successfully");
+            } else {
+              alert("Error updating blog");
+            }
+          };
+
+          const editBlog = async (blog) => {
+            selectedBlog.value = blog;
+            blogId.value = blog.id;
+            page.value = "edit-blog";
+
+            setTimeout(() => {
+              quill = new Quill("#editor", {
+                theme: "snow",
+              });
+
+              quill.root.innerHTML = blog.content;
+            }, 500);
+          };
+
+          const deleteBlog = async () => {
+            const response = await fetch("/api/delete-blog", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                blog_id: selectedBlog.value.id,
+              }),
+            });
+
+            if (response.status == 200) {
+              alert("Blog deleted successfully");
+              let newBlogs = blogs.value.filter(
+                (blog) => blog.id != selectedBlog.value.id
+              );
+              blogs.value = newBlogs;
+              page.value = "blogs";
+            } else {
+              alert("Error deleting blog");
+            }
+          };
+
           onMounted(() => {
             fetch("/api/get-data")
               .then((response) => response.json())
@@ -715,6 +880,14 @@
               .then((data) => {
                 queries.value = data;
               });
+
+            fetch("/api/get-blogs", {
+              method: "POST",
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                blogs.value = data;
+              });
           });
 
           return {
@@ -733,10 +906,17 @@
             uploadImages,
             handleFileUpload,
             queries,
+            selectedBlog,
+            blogs,
+            updateBlog,
+            createBlog,
+            editBlog,
+            deleteBlog,
           };
         },
         delimiters: ["[[", "]]"],
       }).mount("#app");
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
   </body>
 </html>

@@ -1,0 +1,96 @@
+{% extends "base.html" %} {% block body %}
+
+<style>
+  .container {
+    max-width: 800px;
+
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+
+    background: #ffbaba;
+
+    padding: 50px 0;
+  }
+
+  .header h1 {
+    font-weight: 800;
+    font-size: 48px;
+    line-height: 1.5;
+  }
+
+  .separator {
+    background: #4e0f0f;
+    height: 1px;
+    width: 100%;
+    margin: 15px 0;
+  }
+
+  .auth-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .auth-row p {
+    width: fit-content;
+
+    background: #ffffff;
+    border-radius: 20px;
+    height: 40px;
+    padding: 0 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #4e0f0f;
+    font-weight: 600;
+  }
+
+  .blog-content {
+    width: 100%;
+    padding: 25px 0;
+  }
+
+  .title {
+    font-size: 36px;
+    width: 100%;
+  }
+
+  .content {
+    font-size: 18px;
+    line-height: 1.5;
+    width: 100%;
+    white-space: pre-wrap;
+  }
+
+  pre {
+    font-family: Poppins;
+  }
+</style>
+
+<div class="header">
+  <div class="container">
+    <h1>{{ blog["title"] }}</h1>
+    <div class="separator"></div>
+    <div class="auth-row">
+      <p>{{ blog["author"] }}</p>
+      <p>{{ blog["date"] }}</p>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="blog-content">
+    <p class="content">{{ blog["content"]|safe }}</p>
+  </div>
+</div>
+
+{% endblock %}
