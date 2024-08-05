@@ -97,7 +97,10 @@
             </div>
           </div>
           <p class="mb-4">
-            {{ about_content["company_overview"]["paragraph_2"] }}
+            {% for index, item in
+            enumerate(about_content["company_overview"]["paragraph_2"].split("\n"))
+            %} {{ item }}<br /><br />
+            {% endfor %}
           </p>
           <div class="border-top mt-4 pt-4">
             <div class="d-flex align-items-center">
@@ -159,10 +162,15 @@
         </div>
       </div>
       <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-        <h1 class="display-6 mb-5">Our Mission</h1>
-        <p class="mb-4">{{ about_content["mission_vision"]["mission"] }}</p>
-        <h1 class="display-6 mb-5">Our Vision</h1>
+        <h1 class="display-6 mb-2">Our Vision</h1>
         <p class="mb-4">{{ about_content["mission_vision"]["vision"] }}</p>
+        <h1 class="display-6 mb-2">Our Mission</h1>
+        <p class="mb-4">
+          {% for index, item in
+          enumerate(about_content["mission_vision"]["mission"].split("\n")) %}
+          {{ item }}<br /><br />
+          {% endfor %}
+        </p>
       </div>
     </div>
   </div>
