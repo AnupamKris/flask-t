@@ -11,6 +11,47 @@
       no-repeat;
     background-size: cover;
   }
+
+  .address-rows {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: center; */
+  }
+
+  .address-rows .rowa {
+    min-width: 33.33%;
+    width: 33.33%;
+    max-width: 33.33%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    padding: 15px;
+  }
+
+  .rowa span {
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 10px;
+    /* color: var(--primary); */
+  }
+
+  .address-rows.rowa p {
+    padding: 0;
+    margin: 0 !important;
+  }
+
+  @media (max-width: 768px) {
+    .address-rows .rowa {
+      min-width: 100%;
+      width: 100%;
+      max-width: 100%;
+      flex-direction: column;
+      gap: 5px;
+      padding: 15px;
+    }
+  }
 </style>
 
 <!-- Page Header Start -->
@@ -177,4 +218,54 @@
   </div>
 </div>
 <!-- Contact End -->
+
+<!-- Addresses Start -->
+<div class="container-xxl py-5">
+  <div class="container">
+    <div class="wow fadeIn" data-wow-delay="0.1s">
+      <h1 class="display-6 mb-5">Our Offices</h1>
+
+      <div class="address-rows">
+        <div class="rowa">
+          <span>Registered Office Chennai</span>
+          <p>New No. 16/17, Ground Floor Balaraman Street, Adyar, Chennai</p>
+          <p>Pin Code: 600 020</p>
+        </div>
+        <div class="rowa">
+          <span>Branch Office Coimbatore</span>
+          <p>
+            No. 104, 6<sup>th</sup> Street, Lakshmipuram, Peelamedu East (Post),
+            Coimbatore
+          </p>
+          <p>Pin Code: 641 004</p>
+        </div>
+        <div class="rowa">
+          <span>Branch Office Hyderabad</span>
+          <p>
+            Office No. 130, 1<sup>st</sup> Floor, Navketan Complex, Opp. Clock
+            Tower, Sarojini Devi Road, Secuderabad, Hyderabad
+          </p>
+          <p>Pin Code: 500003</p>
+        </div>
+        <div class="rowa">
+          <span>Branch Office Madurai</span>
+          <p>
+            No. 106/4, 3<sup>rd</sup> Floor, Sai Towers, Sathayamoorthy Nagar,
+            Bye Pass Road, Madurai, Tamil Nadu.
+          </p>
+          <p>Pin Code: 625 016</p>
+        </div>
+        <div class="rowa">
+          <span>Branch Office Puducherry</span>
+          <p>
+            Door No : 1, Ayyanar Koil Street, hiruvallur Salai, Ayyanar Nagar,
+            Conner I Building, 1<sup>st</sup> Floor- Puducherry
+          </p>
+          <p>Pin Code: 605 013</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
