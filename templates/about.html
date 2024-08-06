@@ -133,7 +133,7 @@
             {{ about_content["core_values"]["heading"] }}
           </h1>
           {% for index, item in
-          enumerate(about_content["core_values"]["values"]) %}
+          enumerate(about_content["core_values"]["values"].split("\n")) %}
           <li class="value-list text-light mb-5">{{ item }}</li>
           {% endfor %}
         </div>
@@ -186,7 +186,7 @@
           {{about_content["why_choose_us"]["heading"]}}
         </h1>
         {% for index, item in
-        enumerate(about_content["why_choose_us"]["reasons"]) %}
+        enumerate(about_content["why_choose_us"]["reasons"].split("\n")) %}
         <p class="mb-4">{{ item }}</p>
         {% endfor %}
       </div>
