@@ -11,6 +11,10 @@
       no-repeat;
     background-size: cover;
   }
+
+  .justify {
+    text-align: justify;
+  }
 </style>
 
 <!-- Page Header Start -->
@@ -67,7 +71,7 @@
           <h1 class="display-6 mb-5">
             {{ about_content["company_overview"]["headline"] }}
           </h1>
-          <p class="fs-5 text-primary mb-4">
+          <p class="fs-5 text-primary mb-4 justify">
             {{ about_content["company_overview"]["paragraph_1"] }}
           </p>
           <div class="row g-4 mb-4">
@@ -96,7 +100,7 @@
               </div>
             </div>
           </div>
-          <p class="mb-4">
+          <p class="mb-4 justify">
             {% for index, item in
             enumerate(about_content["company_overview"]["paragraph_2"].split("\n"))
             %} {{ item }}<br /><br />
@@ -163,9 +167,11 @@
       </div>
       <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
         <h1 class="display-6 mb-2">Our Vision</h1>
-        <p class="mb-4">{{ about_content["mission_vision"]["vision"] }}</p>
+        <p class="mb-4 justify">
+          {{ about_content["mission_vision"]["vision"] }}
+        </p>
         <h1 class="display-6 mb-2">Our Mission</h1>
-        <p class="mb-4">
+        <p class="mb-4 justify">
           {% for index, item in
           enumerate(about_content["mission_vision"]["mission"].split("\n")) %}
           {{ item }}<br /><br />
@@ -179,6 +185,7 @@
 
 <!-- Why Us Start -->
 <div class="container-xxl py-5">
+  ,
   <div class="container">
     <div class="row g-5">
       <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
@@ -187,7 +194,7 @@
         </h1>
         {% for index, item in
         enumerate(about_content["why_choose_us"]["reasons"].split("\n")) %}
-        <p class="mb-4">{{ item }}</p>
+        <p class="mb-4 justify">{{ item }}</p>
         {% endfor %}
       </div>
       <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
